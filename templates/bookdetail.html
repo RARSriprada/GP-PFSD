@@ -1,0 +1,59 @@
+{% extends 'projectnavbar.html' %}
+{% load static %}
+
+{% block title %}
+    Category
+{% endblock title %}
+
+{% block main-content %}
+<br><br>
+    <div class="container mt-5">
+        <div class="row flex justify-content-between">
+            <div>
+                <img src="{{ book.book_image.url }}" class="col-xs-6 col-sm-12 col-lg-12 mt-3 text-sm-center" alt="Book Image" width="200" height="400" style="max-width: 100%; height: auto;">
+            </div>
+            <div class="productdetail col-lg-5">
+                <h1 style="font-family: Lucida Console; font-size: 25px;">{{ book.title }}</h1>
+                <h5 class="price">Rs.{{ book.discount_price }}/-</h5>
+                <small class="text-decoration-line-through text-muted fs-5"><del>Rs.{{ book.selling_price }}</del></small>
+                <br/><br/>
+                <h4>Book Features</h4>
+                <ul class="fs-5" style="font-family: Rajdhani;">
+                    <li>{{ book.description }}</li>
+                </ul>
+                <form action="/add_to_cart" class="d-inline">
+                    <input type="hidden" name="book_id" value="{{ book.id }}">
+                    <button class="btn btn-primary shadow px-5 py-2" type="submit"><i class="fa-solid fa-cart-shopping"></i> Add to Cart</button>
+                </form>
+                <a href="{% url 'showcart' %}" class="btn btn-warning shadow px-5 py-2 ms-4 text-decoration-none text-white"><i class="fa-brands fa-buy-n-large"></i> Buy Now</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Books Section -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Related Books</h2>
+        <div class="row">
+            {% for book in books %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100">
+                        <a href="{% url 'book_detail' book.id %}">
+                            <img src="{{ related_book.book_image.url }}" class="card-img-top" alt="{{ book.title }}">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p class="card-text">
+                                <span class="text-success">Rs.{{ book.discount_price }}/-
+                                    <small class="text-muted"><del>Rs.{{ book.selling_price }}</del></small>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'book_detail' book.id %}" class="btn btn-primary btn-sm stretched-link">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock main-content %}

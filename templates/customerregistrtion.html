@@ -1,0 +1,132 @@
+{% extends 'projectnavbar.html' %}
+{% load static %}
+{% block title %}Customer registration{% endblock title %}
+{% block styles %}
+<style>
+    /* CSS for Customer Registration Page */
+     body {
+            background-image: url('https://img.freepik.com/premium-photo/opened-book-with-flying-pages-butterflies-dark-backgroundgenerative-ai_391052-12859.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+.container {
+    margin-top: 50px; /* Adjust the top margin as needed */
+}
+
+h3 {
+    text-align: center;
+    color: #333; /* Heading color */
+}
+
+
+        form {
+            max-width: 400px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff; /* Submit button background color */
+    border: none;
+    border-radius: 5px;
+    color: #fff; /* Submit button text color */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3; /* Submit button hover background color */
+}
+
+.small {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.small a {
+    color: #007bff; /* Link color */
+    text-decoration: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-primary {
+    color: #007bff; /* Text color for primary links */
+}
+
+.alert {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.alert-danger {
+    background-color: #f8d7da; /* Background color for danger alerts */
+    border-color: #f5c6cb; /* Border color for danger alerts */
+    color: #721c24; /* Text color for danger alerts */
+}
+
+.alert-primary {
+    background-color: #cce5ff; /* Background color for primary alerts */
+    border-color: #b8daff; /* Border color for primary alerts */
+    color: #004085; /* Text color for primary alerts */
+}
+
+</style>
+{% endblock styles %}
+{% block main-content %}
+<br/><br/><br/>
+<div class="container">
+    <div class="row my-3">
+        <div class="col-sm-6 offset-sm-3">
+            <h3>Registration</h3>
+            <hr>
+            <form action="" method="post" novalidate class="shadow p-5">
+                {% csrf_token %}
+                {% for fm in forms %}
+                {{fm.label_tag}} {{fm}}<small class="text-danger">{{fm.errors|striptags}}</small>
+                <br>
+                {% endfor %}
+                <input type="submit" value="Submit" class="btn btn-primary"><br>
+
+                <div class="text-center text-primary fw-bold">
+                    <small>Existing User ?<a href="{% url 'login' %}" class="text-danger">Login Now</a></small>
+                </div>
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="alert alert-danger my-3">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if messages %}
+                    {% for msg in messages %}
+                        <div class="alert alert-{{msg.tags}}" role="alert">
+                        {{msg}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock main-content %}

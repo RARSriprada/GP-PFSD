@@ -1,0 +1,64 @@
+{% extends 'projectnavbar.html' %}
+{% load static %}
+{% block title %}Address{% endblock title %}
+{% block styles %}
+<style>
+    body {
+            background-image: url('https://img.freepik.com/premium-photo/opened-book-with-flying-pages-butterflies-dark-backgroundgenerative-ai_391052-12859.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+</style>
+{% endblock styles %}
+{% block main-content %}
+
+<br/><br/>
+<div class="my-5">
+    <div class="row">
+        <h3>  Welcome <span class="text-capitalize">{{ request.user }}</span></h3>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 style="text-align:center">Profile Details</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a href="{% url 'profile' %}" class="btn btn-outline-primary btn-block">Profile</a></li>
+                        <li class="list-group-item"><a href="{% url 'address' %}" class="btn btn-primary btn-block">Address</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                {% for ad in add %}
+                <div class="col-sm-6">
+                    <div class="card mb-3">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Address {{ forloop.counter }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Name: {{ ad.name }}</p>
+                            <p class="card-text">Locality: {{ ad.locality }}</p>
+                            <p class="card-text">Mobile: {{ ad.mobile }}</p>
+                            <p class="card-text">City: {{ ad.city }}</p>
+                            <p class="card-text">State: {{ ad.state }}</p>
+                            <p class="card-text">PinCode: {{ ad.pincode }}</p>
+                            <div class="text-center">
+                                <a href="{% url 'updateaddress' pk=ad.id %}" class="btn btn-success">Update</a>
+                                <a href="{% url 'deleteaddress' pk=ad.id %}" class="btn btn-danger">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

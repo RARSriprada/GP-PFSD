@@ -1,0 +1,34 @@
+{% extends 'projectnavbar.html' %}
+{% load static %}
+
+{% block title %}
+    Category
+{% endblock title %}
+
+{% block main-content %}
+<br><br>
+    <div class="container mt-5">
+        <div class="row">
+            {% for book in book %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100">
+                        <a href="{% url 'book_detail' book.id %}">
+                            <img src="{{ book.book_image.url }}" class="card-img-top" alt="{{ book.title }}">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p class="card-text">
+                                <span class="text-success">Rs.{{ book.discount_price }}/-
+                                    <small class="text-muted"><del>Rs.{{ book.selling_price }}</del></small>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'book_detail' book.id %}" class="btn btn-primary btn-sm stretched-link">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock main-content %}
